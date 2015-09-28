@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 
 public class EditItemActivity extends AppCompatActivity {
-
+    String editableText;
     int editablePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
-        String editableText = getIntent().getExtras().getString(MainActivity.EDITABLE);
+        editableText = getIntent().getExtras().getString(MainActivity.TO_EDIT);
         editablePosition = getIntent().getExtras().getInt(MainActivity.EDITABLE_POSITION);
         EditText editText = (EditText)findViewById(R.id.editText);
         editText.setText(editableText);
@@ -47,7 +47,8 @@ public class EditItemActivity extends AppCompatActivity {
     public void onEditedItemSave(View view) {
         Intent editedIntent = new Intent();
         EditText editText = (EditText)findViewById(R.id.editText);
-        editedIntent.putExtra(MainActivity.EDITABLE, editText.getText().toString());
+        editedIntent.putExtra(MainActivity.EDITED_TEXT, editText.getText().toString());
+        editedIntent.putExtra(MainActivity.TO_EDIT, editableText);
         editedIntent.putExtra(MainActivity.EDITABLE_POSITION, editablePosition);
         setResult(RESULT_OK, editedIntent);
         this.finish();
