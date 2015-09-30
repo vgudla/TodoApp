@@ -20,7 +20,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="30dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Priority"
         android:textSize="16dp"
@@ -28,9 +28,20 @@
         android:typeface="monospace"
         android:gravity="center"
         android:id="@+id/tvTaskPriority"
-        android:layout_alignBottom="@+id/tvTaskName"
+        android:layout_alignTop="@+id/tvTaskCompletionDate"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16dp"
+        android:text="Completion Date"
+        android:id="@+id/tvTaskCompletionDate"
+        android:layout_below="@+id/tvTaskName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

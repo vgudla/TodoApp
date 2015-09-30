@@ -19,6 +19,7 @@ public class TodoAdapter extends ArrayAdapter<TodoTask> {
 
     private static class ViewHolder {
         TextView todoText;
+        TextView todoCompletionDate;
         TextView todoPriority;
     }
 
@@ -36,12 +37,14 @@ public class TodoAdapter extends ArrayAdapter<TodoTask> {
             convertView = inflater.inflate(R.layout.item_task, parent, false);
             viewHolder.todoText = (TextView) convertView.findViewById(R.id.tvTaskName);
             viewHolder.todoPriority = (TextView) convertView.findViewById(R.id.tvTaskPriority);
+            viewHolder.todoCompletionDate = (TextView) convertView.findViewById(R.id.tvTaskCompletionDate);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.todoText.setText(task.getTaskText());
         viewHolder.todoPriority.setText(task.getTaskPriority());
+        viewHolder.todoCompletionDate.setText(task.getTaskCompletionDate());
         return convertView;
     }
 }
