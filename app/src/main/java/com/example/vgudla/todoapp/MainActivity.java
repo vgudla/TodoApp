@@ -1,8 +1,8 @@
 package com.example.vgudla.todoapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.vgudla.todoapp.adapters.CustomTodoAdapter;
+import com.example.vgudla.todoapp.adapters.TodoAdapter;
 import com.example.vgudla.todoapp.persistence.DatabaseHelper;
 import com.example.vgudla.todoapp.persistence.TodoTask;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper = DatabaseHelper.getInstance(this);
         items = databaseHelper.getAllTasks();
         lvItems = (ListView)findViewById(R.id.lvItems);
-        itemsAdapter = new CustomTodoAdapter(this, items);
+        itemsAdapter = new TodoAdapter(this, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
         setupItemEditListener();
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
                 TodoTask editableValue = items.get(position);
-                editIntent.putExtra(TO_EDIT, editableValue.getTaskText());
+                editIntent.putExtra(TO_EDIT, editableValue);
                 editIntent.putExtra(EDITABLE_POSITION, position);
                 startActivityForResult(editIntent, REQUEST_CODE);
             }
@@ -92,13 +92,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            String editedValue = data.getExtras().getString(EDITED_TEXT);
-            String oldValue = data.getExtras().getString(TO_EDIT);
+            TodoTask editedValue = (TodoTask)data.getExtras().getSerializable(EDITED_TEXT);
+            TodoTask oldValue = (TodoTask)data.getExtras().getSerializable(TO_EDIT);
             int editedPosition = data.getExtras().getInt(EDITABLE_POSITION);
-            TodoTask updatedTask = new TodoTask(editedValue);
-            items.set(editedPosition, updatedTask);
+            items.set(editedPosition, editedValue);
             itemsAdapter.notifyDataSetChanged();
-            databaseHelper.updateTask(oldValue, updatedTask);
+            databaseHelper.updateTask(oldValue.getTaskText(), editedValue);
         }
     }
 

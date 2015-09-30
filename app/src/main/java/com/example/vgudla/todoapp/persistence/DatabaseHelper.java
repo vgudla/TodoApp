@@ -15,11 +15,13 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "todoTasksDb";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TAG = "DatabaseHelper";
 
     private static final String TASKS_TABLE = "tasks";
     private static final String TASK_NAME = "task";
+    private static final String TASK_DATE = "taskDate";
+    private static final String TASK_PRIORITY = "taskPriority";
 
     private static DatabaseHelper databaseHelper;
 
@@ -44,7 +46,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TASKS_TABLE = "CREATE TABLE " + TASKS_TABLE +
                 "(" +
-                TASK_NAME + " TEXT PRIMARY KEY" +
+                    TASK_NAME + " TEXT PRIMARY KEY," +
+                    TASK_DATE + " TEXT," +
+                    TASK_PRIORITY + " TEXT" +
                 ")";
 
         db.execSQL(CREATE_TASKS_TABLE);
@@ -64,6 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(TASK_NAME, task.getTaskText());
+            values.put(TASK_DATE, task.getTaskCompletionDate());
+            values.put(TASK_PRIORITY, task.getTaskPriority());
             db.insertOrThrow(TASKS_TABLE, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -79,6 +85,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(TASK_NAME, task.getTaskText());
+            values.put(TASK_DATE, task.getTaskCompletionDate());
+            values.put(TASK_PRIORITY, task.getTaskPriority());
             int rows = db.update(TASKS_TABLE, values, TASK_NAME + "= ?", new String[]{key});
 
             if (rows == 1) {
@@ -132,7 +140,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     String taskText = cursor.getString(cursor.getColumnIndex(TASK_NAME));
-                    TodoTask task = new TodoTask(taskText);
+                    String taskCompletionDate = cursor.getString(cursor.getColumnIndex(TASK_DATE));
+                    String taskPriority = cursor.getString(cursor.getColumnIndex(TASK_PRIORITY));
+                    TodoTask task = new TodoTask(taskText, taskPriority, taskCompletionDate);
                     tasks.add(task);
                 } while(cursor.moveToNext());
             }

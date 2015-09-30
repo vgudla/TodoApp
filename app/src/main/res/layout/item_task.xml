@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
     <TextView
-        android:id="@+id/etNewTask"
+        android:id="@+id/tvTaskName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="Task"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
-</LinearLayout>
+        android:textSize="20dp"
+        android:typeface="monospace"
+        android:textColor="#002366"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:layout_weight="0.03"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Priority"
+        android:textSize="16dp"
+        android:textAllCaps="true"
+        android:typeface="monospace"
+        android:gravity="center"
+        android:id="@+id/tvTaskPriority"
+        android:layout_alignBottom="@+id/tvTaskName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

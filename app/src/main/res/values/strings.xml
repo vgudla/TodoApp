@@ -8,4 +8,7 @@
     <string name="title_activity_edit_item">Edit Item</string>
     <string name="todoapp_editItemText">Edit Item Below:</string>
     <string name="todoapp_saveEditedItemBtnText">Save</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_high">High</string>
+    <string name="todo_task_completion">Task Completion Date</string>
 </resources>
